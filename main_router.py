@@ -1,11 +1,31 @@
 from aiogram import Router
 from aiogram import F
 from aiogram.types import Message
+from aiogram.filters import Command, CommandStart
 
 from huenization_core import Huenizator
 from filters import ValidateWordForHuenization
 
 router = Router()
+
+# @router.message(CommandStart)
+# async def start(message: Message):
+#     await message.answer("""Отправьте боту одно слово и он вернёт его с корнем "хуй".
+#                 Если вы думаете что слово хуенизировано неверно воспользуйтесь командой /start.
+#                 Напишите /error <изначальное слово> <неверно хуенизированное слово> <правильная хуенизация словаЮ""")
+
+
+@router.message(Command('help'))
+async def help(message: Message):
+    await message.answer("""Отправьте боту одно слово и он вернёт его с корнем "хуй".
+Если вы думаете что слово хуенизировано неверно воспользуйтесь командой /error.
+Напишите /error <изначальное слово> <неверно хуенизированное слово> <правильная хуенизация слова>.""")
+
+
+@router.message(Command('error'))
+async def send_error(message: Message):
+    await message.answer("Ваше сообщение об ошибке отпралено на модерацию")
+    # TODO: make error moderation
 
 
 @router.message(F.content_type.in_({'text'}), ValidateWordForHuenization())

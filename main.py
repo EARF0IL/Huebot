@@ -24,3 +24,5 @@ async def main():
 if __name__ == "__main__":
     basicConfig(level=INFO)
     asyncio.run(main())
+
+# TODO: make accent check for Ё
