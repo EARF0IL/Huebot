@@ -21,10 +21,6 @@ class Huenizator:
                                self.vowel_letters[first_vowel_letter] +\
                                self.source_word[first_vowel_letter_index + 1:]
 
-        
-
-
-
     def get_source_word(self) -> str:
         return self.source_word
 

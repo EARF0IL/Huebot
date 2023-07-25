@@ -7,7 +7,7 @@ class ValidateWordForHuenization(BaseFilter):
         super().__init__()
 
     async def __call__(self, message: Message) -> bool:
-        text = message.text.strip().split()
+        text = message.text.lower().strip().split()
         if len(text) > 1:
             return False
         word = text[0]

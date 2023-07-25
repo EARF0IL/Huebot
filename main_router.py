@@ -30,7 +30,7 @@ async def send_error(message: Message):
 
 @router.message(F.content_type.in_({'text'}), ValidateWordForHuenization())
 async def hueunction(message: Message):
-    word = message.text.strip()
+    word = message.text.lower().strip()
     huenizator = Huenizator(word)
     await message.answer(huenizator.get_huenizated_word().capitalize())
 
