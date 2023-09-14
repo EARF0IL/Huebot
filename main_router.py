@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram import F
 from aiogram.types import Message
-from aiogram.filters import Command, CommandStart
+from aiogram.filters import Command
 
 from huenization_core import Huenizator
 from filters import ValidateWordForHuenization
@@ -28,13 +28,21 @@ async def send_error(message: Message):
     # TODO: make error moderation
 
 
-@router.message(F.content_type.in_({'text'}), ValidateWordForHuenization())
+@router.message(Command('huy'), F.content_type.in_({'text'}), ValidateWordForHuenization())
+async def commanded_hueunction(message: Message):
+    word = message.text.lower().strip().split()[1]
+    huenizator = Huenizator(word)
+    await message.answer(huenizator.get_huenizated_word().capitalize())
+
+
+@router.message(F.chat.type.in_({'private'}), F.content_type.in_({'text'}), ValidateWordForHuenization())
 async def hueunction(message: Message):
     word = message.text.lower().strip()
     huenizator = Huenizator(word)
     await message.answer(huenizator.get_huenizated_word().capitalize())
 
 
-@router.message()
+@router.message(F.chat.type.in_({'private'}))
 async def help_message(message: Message):
     await message.answer("""Отправьте боту одно слово и он вернёт его с корнем "хуй".""")
+
